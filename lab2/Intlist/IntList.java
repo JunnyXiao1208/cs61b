@@ -11,11 +11,11 @@ public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -37,7 +37,6 @@ public class IntList {
      * Returns a list equal to L with all elements squared. Destructive.
      */
     public static void dSquareList(IntList L) {
-
         while (L != null) {
             L.first = L.first * L.first;
             L = L.rest;
@@ -87,19 +86,24 @@ public class IntList {
     }
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        IntList res = B;
-        IntList p = A;
-        while(p.rest != null){
-            p = p.rest;
+        // 处理 A 为空的情况
+        if (A == null) {
+            return B;
         }
-        while(res.rest != null){
-            p.rest = res;
-            res = res.rest;
-            p = p.rest;
+        // 处理 B 为空的情况
+        if (B == null) {
+            return A;
         }
+        // 找到 A 的末尾
+        IntList tail = A;
+        while (tail.rest != null) {
+            tail = tail.rest;
+        }
+        // 将 B 连接到 A 的末尾
+        tail.rest = B;
         return A;
     }
+
 
     /**
      * Returns a list consisting of the elements of A followed by the
@@ -107,19 +111,24 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         IntList A1 = copy1(A);
-        IntList res = B;
-        IntList p = A1;
-        while(p.rest != null){
-            p = p.rest;
-        }
-        while(res.rest != null){
-            p.rest = res;
-            res = res.rest;
-            p = p.rest;
-        }
-        return A1;
 
+        // 如果 A1 为空，直接返回 B
+        if (A1 == null) {
+            return B;
+        }
+
+        // 找到 A1 的最后一个元素
+        IntList tail = A1;
+        while (tail.rest != null) {
+            tail = tail.rest;
+        }
+
+        // 将 B 连接到 A1 的末尾
+        tail.rest = B;
+
+        return A1;
     }
+
 
 
 
